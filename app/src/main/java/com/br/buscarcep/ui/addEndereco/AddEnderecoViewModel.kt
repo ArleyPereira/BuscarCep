@@ -1,43 +1,23 @@
 package com.br.buscarcep.ui.addEndereco
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.br.buscarcep.data.model.Endereco
+import androidx.lifecycle.liveData
 import com.br.buscarcep.data.repository.EnderecoRepository
-import kotlinx.coroutines.*
+import com.br.buscarcep.utils.Resource
+import kotlinx.coroutines.Dispatchers
 
-class AddEnderecoViewModel constructor(
-    private val enderecoRepository: EnderecoRepository
-) : ViewModel() {
+class AddEnderecoViewModel (private val enderecoRepository: EnderecoRepository) : ViewModel() {
 
-    val errorMessage = MutableLiveData<String>()
-    val endereco = MutableLiveData<Endereco>()
-    var job: Job? = null
+    fun getEndereco(cep: String) = liveData(Dispatchers.IO) {
 
-    val loading = MutableLiveData<Boolean>()
+        emit(Resource.loading(data = null))
 
-    fun getEndereco(cep: String) {
-        job = CoroutineScope(Dispatchers.IO).launch {
-            val response = enderecoRepository.getEndereco(cep)
-            withContext(Dispatchers.Main) {
-                if (response.isSuccessful) {
-                    endereco.postValue(response.body())
-                    loading.value = false
-                }else {
-                    onError("Error: ${response.message()}")
-                }
-            }
+        try {
+            emit(Resource.sucess(data = enderecoRepository.getEndereco(cep)))
+
+        }catch (exception: Exception){
+            emit(Resource.error(data = null, message = exception.message ?: "Aconteceu um erro!"))
         }
-    }
 
-    private fun onError(message: String) {
-        errorMessage.value = message
-        loading.value = false
     }
-
-    override fun onCleared() {
-        super.onCleared()
-        job?.cancel()
-    }
-
 }

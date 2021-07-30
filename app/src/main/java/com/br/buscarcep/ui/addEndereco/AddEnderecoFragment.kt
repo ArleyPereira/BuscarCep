@@ -7,11 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.br.buscarcep.R
-import com.br.buscarcep.data.factory.MyViewModelFactory
+import com.br.buscarcep.data.api.EnderecoHelperApi
+import com.br.buscarcep.data.factory.ViewModelFactory
 import com.br.buscarcep.data.repository.EnderecoRepository
-import com.br.buscarcep.service.EnderecoService
+import com.br.buscarcep.data.api.EnderecoService
+import com.br.buscarcep.data.api.RetrofitBuilder
+import com.br.buscarcep.utils.Status
 import kotlinx.android.synthetic.main.add_endereco_fragment.*
 
 class AddEnderecoFragment : Fragment() {
@@ -28,34 +32,46 @@ class AddEnderecoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val enderecoService = EnderecoService.getInstance()
-        val enderecoRepository = EnderecoRepository(enderecoService)
+        setupViewModel()
 
+        setupObserver()
+
+    }
+
+    private fun setupViewModel() {
         addEnderecoViewModel = ViewModelProvider(
             this,
-            MyViewModelFactory(enderecoRepository)
+            ViewModelFactory(EnderecoHelperApi(RetrofitBuilder.enderecoService))
         ).get(AddEnderecoViewModel::class.java)
+    }
 
-        addEnderecoViewModel.endereco.observe(viewLifecycleOwner, { endereco ->
-            Log.i("INFOTESTE", "onCreate: $endereco")
-        })
 
-        addEnderecoViewModel.errorMessage.observe(viewLifecycleOwner, { error ->
-            Toast.makeText(activity, error, Toast.LENGTH_SHORT).show()
-        })
-
-        addEnderecoViewModel.loading.observe(viewLifecycleOwner, {
-            if (it) {
-                progressBar.visibility = View.VISIBLE
-            } else {
-                progressBar.visibility = View.GONE
-            }
-        })
-
+    private fun setupObserver() {
         btnBuscar.setOnClickListener {
-            addEnderecoViewModel.getEndereco(edtCep.text.toString())
-        }
+            addEnderecoViewModel.getEndereco(edtCep.text.toString()).observe(viewLifecycleOwner, {
+                it?.let { resource ->
 
+                    when (resource.status) {
+
+                        Status.SUCESS -> {
+                            Log.i("INFOTESTE", "setupObserver: ${resource.data}")
+                            progressBar.visibility - View.GONE
+                        }
+
+                        Status.ERROR -> {
+                            Log.i("INFOTESTE", "setupObserver: ${it.message}")
+                            progressBar.visibility - View.GONE
+                        }
+
+                        Status.LOADING -> {
+                            progressBar.visibility - View.VISIBLE
+                        }
+
+                    }
+
+                }
+            })
+        }
     }
 
 }
