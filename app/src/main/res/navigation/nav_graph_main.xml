@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.br.buscarcep.ui.home.HomeFragment"
+        android:name="com.br.buscarcep.ui.addEndereco.AddEnderecoFragment"
         android:label="home_fragment"
-        tools:layout="@layout/home_fragment" />
+        tools:layout="@layout/add_endereco_fragment" />
 </navigation>

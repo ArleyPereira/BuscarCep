@@ -1,4 +1,4 @@
-package com.br.buscarcep.ui.home
+package com.br.buscarcep.ui.addEndereco
 
 import android.os.Bundle
 import android.util.Log
@@ -12,17 +12,17 @@ import com.br.buscarcep.R
 import com.br.buscarcep.data.factory.MyViewModelFactory
 import com.br.buscarcep.data.repository.EnderecoRepository
 import com.br.buscarcep.service.EnderecoService
-import kotlinx.android.synthetic.main.home_fragment.*
+import kotlinx.android.synthetic.main.add_endereco_fragment.*
 
-class HomeFragment : Fragment() {
+class AddEnderecoFragment : Fragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var addEnderecoViewModel: AddEnderecoViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.home_fragment, container, false)
+        return inflater.inflate(R.layout.add_endereco_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -31,20 +31,20 @@ class HomeFragment : Fragment() {
         val enderecoService = EnderecoService.getInstance()
         val enderecoRepository = EnderecoRepository(enderecoService)
 
-        homeViewModel = ViewModelProvider(
+        addEnderecoViewModel = ViewModelProvider(
             this,
             MyViewModelFactory(enderecoRepository)
-        ).get(HomeViewModel::class.java)
+        ).get(AddEnderecoViewModel::class.java)
 
-        homeViewModel.endereco.observe(viewLifecycleOwner, { endereco ->
+        addEnderecoViewModel.endereco.observe(viewLifecycleOwner, { endereco ->
             Log.i("INFOTESTE", "onCreate: $endereco")
         })
 
-        homeViewModel.errorMessage.observe(viewLifecycleOwner, { error ->
+        addEnderecoViewModel.errorMessage.observe(viewLifecycleOwner, { error ->
             Toast.makeText(activity, error, Toast.LENGTH_SHORT).show()
         })
 
-        homeViewModel.loading.observe(viewLifecycleOwner, {
+        addEnderecoViewModel.loading.observe(viewLifecycleOwner, {
             if (it) {
                 progressBar.visibility = View.VISIBLE
             } else {
@@ -53,7 +53,7 @@ class HomeFragment : Fragment() {
         })
 
         btnBuscar.setOnClickListener {
-            homeViewModel.getEndereco(edtCep.text.toString())
+            addEnderecoViewModel.getEndereco(edtCep.text.toString())
         }
 
     }

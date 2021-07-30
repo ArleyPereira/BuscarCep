@@ -1,4 +1,4 @@
-package com.br.buscarcep.ui.home
+package com.br.buscarcep.ui.addEndereco
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -6,7 +6,7 @@ import com.br.buscarcep.data.model.Endereco
 import com.br.buscarcep.data.repository.EnderecoRepository
 import kotlinx.coroutines.*
 
-class HomeViewModel constructor(
+class AddEnderecoViewModel constructor(
     private val enderecoRepository: EnderecoRepository
 ) : ViewModel() {
 
