@@ -11,10 +11,8 @@ class AddEnderecoViewModel (private val enderecoRepository: EnderecoRepository) 
     fun getEndereco(cep: String) = liveData(Dispatchers.IO) {
 
         emit(Resource.loading(data = null))
-
         try {
             emit(Resource.sucess(data = enderecoRepository.getEndereco(cep)))
-
         }catch (exception: Exception){
             emit(Resource.error(data = null, message = exception.message ?: "Aconteceu um erro!"))
         }
