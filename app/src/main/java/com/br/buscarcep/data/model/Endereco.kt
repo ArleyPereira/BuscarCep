@@ -1,5 +1,7 @@
 package com.br.buscarcep.data.model
 
+import java.io.Serializable
+
 data class Endereco(
     val cep: String,
     val logradouro: String,
@@ -11,4 +13,4 @@ data class Endereco(
     val gia: String,
     val ddd: String,
     val siafi: String
-)
+) : Serializable

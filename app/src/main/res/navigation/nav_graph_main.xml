@@ -3,11 +3,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_main"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/enderecoListFragment">
 
     <fragment
-        android:id="@+id/homeFragment"
+        android:id="@+id/enderecoListFragment"
+        android:name="com.br.buscarcep.ui.enderecoList.EnderecoListFragment"
+        android:label="@string/endereco_list_fragment_toolbar_title"
+        tools:layout="@layout/endereco_list_fragment" >
+
+        <argument
+            android:name="endereco"
+            app:argType="com.br.buscarcep.data.model.Endereco"
+            app:nullable="true"
+            android:defaultValue="@null" />
+
+        <action
+            android:id="@+id/action_enderecoListFragment_to_addEnderecoFragment"
+            app:destination="@id/addEnderecoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addEnderecoFragment"
         android:name="com.br.buscarcep.ui.addEndereco.AddEnderecoFragment"
-        android:label="home_fragment"
-        tools:layout="@layout/add_endereco_fragment" />
+        android:label="@string/add_endereco_fragment_toolbar_title"
+        tools:layout="@layout/add_endereco_fragment" >
+
+        <action
+            android:id="@+id/action_addEnderecoFragment_to_enderecoListFragment"
+            app:destination="@id/enderecoListFragment" />
+
+    </fragment>
+
 </navigation>

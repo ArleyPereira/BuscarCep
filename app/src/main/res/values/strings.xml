@@ -1,5 +1,16 @@
 <resources>
     <string name="app_name">BuscarCEP</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+<!--    EnderecoListFragment-->
+    <string name="endereco_list_fragment_toolbar_title">Endereços</string>
+
+    <!--    AddEnderecoFragment-->
+    <string name="add_endereco_fragment_toolbar_title">Novo endereço</string>
+
+    <string name="text_localidade">Município: %1$s</string>
+    <string name="text_bairro">Bairro: %1$s</string>
+    <string name="text_ddd">DDD: %1$s</string>
+    <string name="text_logradouro">Endereço: %1$s</string>
+    <string name="text_cep">CEP: %1$s</string>
+
 </resources>

@@ -18,17 +18,17 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="16dp"
-            android:background="@android:color/white">
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:padding="16dp">
 
             <TextView
-                android:id="@+id/txtLocalidade"
+                android:id="@+id/txtLogradouro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -38,27 +38,26 @@
                 android:id="@+id/txtBairro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtLocalidade"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtLogradouro"
                 tools:text="Bairro: Jardim Limoeiro" />
 
             <TextView
-                android:id="@+id/txtLogradouro"
+                android:id="@+id/txtLocalidade"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/txtBairro"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtLogradouro"
                 tools:text="Município: Serra" />
 
             <TextView
                 android:id="@+id/txtDDD"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtLogradouro"
+                app:layout_constraintTop_toBottomOf="@+id/txtLocalidade"
                 tools:text="DDD: 27" />
 
             <TextView
@@ -67,7 +66,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/txtDDD"
+                app:layout_constraintTop_toBottomOf="@+id/txtBairro"
                 tools:text="CEP: 29164050" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

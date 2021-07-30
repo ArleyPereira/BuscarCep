@@ -5,8 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.br.buscarcep.R
 import com.br.buscarcep.data.api.EnderecoHelperApi
 import com.br.buscarcep.data.api.RetrofitBuilder
@@ -41,33 +43,42 @@ class AddEnderecoFragment : Fragment() {
         ).get(AddEnderecoViewModel::class.java)
     }
 
-
     private fun setupObserver() {
         btnBuscar.setOnClickListener {
 
-            addEnderecoViewModel.getEndereco(edtCep.text.toString()).observe(viewLifecycleOwner, {
-                it?.let { resource ->
+            addEnderecoViewModel.getEndereco(edtCep.text.toString())
+                .observe(viewLifecycleOwner, { endereco ->
+                    endereco?.let { resource ->
 
-                    when (resource.status) {
+                        when (resource.status) {
+                            Status.SUCESS -> {
+                                Toast.makeText(
+                                    activity,
+                                    "Endereço cadastrado com sucesso!",
+                                    Toast.LENGTH_LONG
+                                ).show()
 
-                        Status.SUCESS -> {
-                            Log.i("INFOTESTE", "setupObserver: ${resource.data}")
-                            progressBar.visibility - View.GONE
-                        }
+                                val action = AddEnderecoFragmentDirections
+                                    .actionAddEnderecoFragmentToEnderecoListFragment(endereco.data)
 
-                        Status.ERROR -> {
-                            Log.i("INFOTESTE", "setupObserver: ${it.message}")
-                            progressBar.visibility - View.GONE
-                        }
+                                findNavController().navigate(action)
 
-                        Status.LOADING -> {
-                            progressBar.visibility - View.VISIBLE
+                            }
+
+                            Status.ERROR -> {
+                                Toast.makeText(activity, endereco.message, Toast.LENGTH_LONG).show()
+                                progressBar.visibility - View.GONE
+                            }
+
+                            Status.LOADING -> {
+                                Log.i("INFOTESTE", "setupObserver: - Carregando")
+                                progressBar.visibility - View.VISIBLE
+                            }
+
                         }
 
                     }
-
-                }
-            })
+                })
         }
     }
 
