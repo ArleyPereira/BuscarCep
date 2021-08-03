@@ -7,13 +7,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.br.buscarcep.R
-import com.br.buscarcep.data.model.Endereco
+import com.br.buscarcep.data.db.entity.AddressEntity
 import kotlinx.android.synthetic.main.layout_item_endereco.view.*
 
 class EnderecoListAdapter(
-    private val onClick: (Endereco) -> Unit
+    private val onClick: (AddressEntity) -> Unit
 ) :
-    ListAdapter<Endereco, EnderecoListAdapter.EnderecoViewHolder>(EnderecoListAdapter) {
+    ListAdapter<AddressEntity, EnderecoListAdapter.EnderecoViewHolder>(EnderecoListAdapter) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EnderecoViewHolder {
         return EnderecoViewHolder.from(parent)
@@ -25,21 +25,21 @@ class EnderecoListAdapter(
 
     class EnderecoViewHolder private constructor(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
-        fun bind(endereco: Endereco, click: ((Endereco) -> Unit)) {
+        fun bind(addressEntity: AddressEntity, click: ((AddressEntity) -> Unit)) {
 
-            itemView.setOnClickListener { click(endereco) }
+            itemView.setOnClickListener { click(addressEntity) }
 
             with(itemView) {
                 txtLocalidade.text =
-                    context.getString(R.string.text_localidade, endereco.localidade)
+                    context.getString(R.string.text_localidade, addressEntity.localidade)
                 txtBairro.text =
-                    context.getString(R.string.text_bairro, endereco.bairro)
+                    context.getString(R.string.text_bairro, addressEntity.bairro)
                 txtDDD.text =
-                    context.getString(R.string.text_ddd, endereco.ddd)
+                    context.getString(R.string.text_ddd, addressEntity.ddd)
                 txtLogradouro.text =
-                    context.getString(R.string.text_logradouro, endereco.logradouro)
+                    context.getString(R.string.text_logradouro, addressEntity.logradouro)
                 txtCEP.text =
-                    context.getString(R.string.text_cep, endereco.cep)
+                    context.getString(R.string.text_cep, addressEntity.cep)
             }
         }
 
@@ -52,13 +52,13 @@ class EnderecoListAdapter(
         }
     }
 
-    private companion object : DiffUtil.ItemCallback<Endereco>() {
+    private companion object : DiffUtil.ItemCallback<AddressEntity>() {
 
-        override fun areItemsTheSame(oldItem: Endereco, newItem: Endereco): Boolean {
+        override fun areItemsTheSame(oldItem: AddressEntity, newItem: AddressEntity): Boolean {
             return oldItem.cep == newItem.cep
         }
 
-        override fun areContentsTheSame(oldItem: Endereco, newItem: Endereco): Boolean {
+        override fun areContentsTheSame(oldItem: AddressEntity, newItem: AddressEntity): Boolean {
             return oldItem == newItem
         }
     }

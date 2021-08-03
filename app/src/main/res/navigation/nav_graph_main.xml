@@ -13,7 +13,7 @@
 
         <argument
             android:name="endereco"
-            app:argType="com.br.buscarcep.data.model.Endereco"
+            app:argType="com.br.buscarcep.data.db.entity.AddressEntity"
             app:nullable="true"
             android:defaultValue="@null" />
 

@@ -14,6 +14,6 @@ object RetrofitBuilder {
             .build()
     }
 
-    val enderecoService: EnderecoService = getRetrofit().create(EnderecoService::class.java)
+    val ADDRESS_SERVICE: AddressService = getRetrofit().create(AddressService::class.java)
 
 }

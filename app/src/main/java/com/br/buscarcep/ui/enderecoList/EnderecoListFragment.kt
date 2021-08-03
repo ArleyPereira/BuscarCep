@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.br.buscarcep.R
-import com.br.buscarcep.data.model.Endereco
+import com.br.buscarcep.data.db.entity.AddressEntity
 import kotlinx.android.synthetic.main.endereco_list_fragment.*
 
 class EnderecoListFragment : Fragment() {
@@ -18,7 +18,7 @@ class EnderecoListFragment : Fragment() {
     private val args: EnderecoListFragmentArgs by navArgs()
 
     private lateinit var enderecoListAdapter: EnderecoListAdapter
-    private var enderecoList: MutableList<Endereco> = mutableListOf()
+    private var addressEntityList: MutableList<AddressEntity> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,7 +40,6 @@ class EnderecoListFragment : Fragment() {
     }
 
     private fun setupUI() {
-
         enderecoListAdapter = EnderecoListAdapter {
             Log.i("INFOTESTE", "setupUI: - adapter iniciado")
         }
@@ -61,8 +60,8 @@ class EnderecoListFragment : Fragment() {
     // Recupera o endereço cadastrado
     private fun getEndereco() {
         args.endereco?.let { endereco ->
-            enderecoList.add(endereco)
-            enderecoListAdapter.submitList(enderecoList)
+            addressEntityList.add(endereco)
+            enderecoListAdapter.submitList(addressEntityList)
         }
 
     }

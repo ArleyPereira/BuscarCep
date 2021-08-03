@@ -18,4 +18,5 @@ class AddEnderecoViewModel (private val enderecoRepository: EnderecoRepository) 
         }
 
     }
+
 }
